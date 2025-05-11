@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>e-níguima dudia</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .media-container {
+      max-width: 90%;
+      margin: 0 auto 2rem auto;
+    }
+
+    video, img {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #444;
+    }
+
+    .hint-container {
+      margin-bottom: 2rem;
+    }
+
+    .hint{
+      background-color: #222;
+      color: #222;
+      border: 1px solid #444;
+      margin: 0.5rem auto;
+      padding: 1rem;
+      width: 600px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center; /* Align text and box */
+      justify-content: flex-start; /* Align text to the left */
+    }
+    .answer {
+      background-color: #222;
+      color: #222;
+      border: 1px solid #444;
+      margin: 0.5rem auto;
+      padding: 1rem;
+      width: 300px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center; /* Align text and box */
+      justify-content: flex-start; /* Align text to the left */
+    }
+
+    .hint span, .answer span {
+      margin-right: 10px; /* Space between the text and box */
+    }
+
+    .revealed {
+      color: #fff;
+    }
+
+    .not-found {
+      color: red;
+      font-size: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    /* Additional styling for the label text */
+    .hint-label {
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .hint-box, .answer-box {
+      background-color: #444;
+      width: 600px;
+      height: 30px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      color: #222;
+      transition: background-color 0.3s ease;
+    }
+
+    .hint-box.revealed, .answer-box.revealed {
+      background-color: #666;
+      color: #fff;
+    }
+
+.hint, .hint-box, .answer, .answer-box {
+	z-index: 30;
+}
+
+.text-box {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 18px;
+  border: 1px solid #444;
+  padding: 10px;
+  max-width: 300px;
+  min-width: 100px;
+  max-height: 150px;
+  min-height: 50px;  /* Ensuring the minimum height */
+  resize: both;  /* This allows resizing the box */
+  overflow: auto;  /* Ensures scrolling if content overflows */
+  z-index: 20;  /* Ensure it's above the canvas */
+}
+  </style>
+</head>
+<body>
+
+  <div class="media-container" id="media"></div>
+  <div class="hint-container" id="hints"></div>
+  <div class="answer" id="answer" onclick="reveal(this)"></div>
+
+  <script>
+    function reveal(element) {
+      if (element.classList.contains('hint-box') || element.classList.contains('answer-box')) {
+        const hintText = element.getAttribute('data-hint'); // Get the hint text from the data attribute
+        element.textContent = hintText; // Set the text of the box to the hint
+        element.classList.add('revealed'); // Apply the reveal style
+      } else {
+        element.classList.add('revealed');
+      }
+    }
+
+    function getQueryParam(name, fallback = "today") {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || fallback;
+    }
+
+    const key = getQueryParam("q");
+    const basePath = `enigmas/${key}`;
+
+    const mediaContainer = document.getElementById("media");
+
+    fetch(`${basePath}.mp4`, { method: "HEAD" })
+      .then(response => {
+        if (response.ok) {
+          const video = document.createElement("video");
+          video.src = `${basePath}.mp4`;
+          video.autoplay = true;
+          video.loop = true;
+          video.controls = true;
+          video.playsInline = true;
+          mediaContainer.appendChild(video);
+
+          video.play().catch(() => {
+            const msg = document.createElement("div");
+            msg.style.color = "orange";
+            msg.textContent = "Clique no vídeo para ativar o som.";
+            mediaContainer.appendChild(msg);
+          });
+        } else {
+          throw new Error("MP4 not found");
+        }
+      })
+      .catch(() => {
+        const img = document.createElement("img");
+        img.src = `${basePath}.png`;
+        img.alt = "Imagem do enigma";
+        mediaContainer.appendChild(img);
+      });
+
+    fetch(`${basePath}.txt`)
+      .then(response => {
+        if (!response.ok) throw new Error("Arquivo não encontrado");
+        return response.text();
+      })
+      .then(text => {
+        const lines = text.trim().split("\n");
+        if (lines.length < 2) throw new Error("Arquivo inválido");
+
+        const hintsDiv = document.getElementById("hints");
+
+        const generalHints = lines.slice(0, -2);
+        const definitionHint = lines[lines.length - 2];
+        const answerText = lines[lines.length - 1];
+
+        // Add general hints with boxes
+        generalHints.forEach((line, index) => {
+          const div = document.createElement("div");
+          div.className = "hint";
+
+          const label = document.createElement("span");
+          label.className = "hint-label";
+          label.textContent = `Dica ${index + 1}: `;
+
+          const box = document.createElement("span");
+          box.className = "hint-box";
+          box.setAttribute('data-hint', line);  // Store the hint in a data attribute
+          box.textContent = "";  // Start with empty box
+          box.onclick = () => reveal(box);
+          
+          div.appendChild(label);
+          div.appendChild(box);
+          hintsDiv.appendChild(div);
+        });
+
+        // Add the definition hint with box
+        const defDiv = document.createElement("div");
+        defDiv.className = "hint";
+
+        const defLabel = document.createElement("span");
+        defLabel.className = "hint-label";
+        defLabel.textContent = "Dica Definição: ";
+
+        const defBox = document.createElement("span");
+        defBox.className = "hint-box";
+        defBox.setAttribute('data-hint', definitionHint);  // Store the definition hint
+        defBox.textContent = "";  // Start with empty box
+        defBox.onclick = () => reveal(defBox);
+
+        defDiv.appendChild(defLabel);
+        defDiv.appendChild(defBox);
+        hintsDiv.appendChild(defDiv);
+
+        // Display the answer with box
+        const answerDiv = document.getElementById("answer");
+
+        const answerLabel = document.createElement("span");
+        answerLabel.className = "hint-label";
+        answerLabel.textContent = "Resposta: ";
+
+        const answerBox = document.createElement("span");
+        answerBox.className = "answer-box";
+        answerBox.setAttribute('data-hint', answerText);  // Store the answer text
+        answerBox.textContent = "";  // Start with empty box
+        answerBox.onclick = () => reveal(answerBox);
+
+        answerDiv.appendChild(answerLabel);
+        answerDiv.appendChild(answerBox);
+      })
+      .catch(err => {
+        document.getElementById("media").innerHTML = "";
+        document.getElementById("hints").innerHTML = "";
+        document.getElementById("answer").innerHTML = "";
+        const error = document.createElement("div");
+        error.className = "not-found";
+        error.textContent = "404 – Enigma não encontrado.";
+        document.body.appendChild(error);
+      });
+  </script>
+
+<script>
+  // Drawing on canvas
+  const canvas = document.createElement("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.position = "absolute";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.zIndex = "10";
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+  let drawing = false;
+
+  // Start drawing when mouse is pressed
+  canvas.addEventListener("mousedown", (e) => {
+    drawing = true;
+    ctx.moveTo(e.clientX, e.clientY);  // Set the starting point
+  });
+
+  // Draw as the mouse moves
+  canvas.addEventListener("mousemove", (e) => {
+    if (!drawing) return;
+    ctx.lineTo(e.clientX, e.clientY);  // Draw a line to the mouse's current position
+    ctx.strokeStyle = "white";         // Set the color to white
+    ctx.lineWidth = 2;                 // Set the line thickness
+    ctx.stroke();                      // Draw the line
+  });
+
+  // Stop drawing when mouse is released
+  canvas.addEventListener("mouseup", () => {
+    drawing = false;
+  });
+
+  // Double-click functionality to create a new text box
+  canvas.addEventListener("dblclick", (e) => {
+    createTextBox(e.clientX, e.clientY);  // Create a new text box at the click position
+  });
+
+  // Create a text box at the mouse release position
+  function createTextBox(x, y) {
+    const textBox = document.createElement("textarea");
+    textBox.classList.add("text-box");  // Apply the predefined CSS for the text box
+    textBox.style.left = `${x}px`;
+    textBox.style.top = `${y}px`;
+    textBox.style.position = "absolute";
+    document.body.appendChild(textBox); // Add the text box to the body
+    textBox.focus();                    // Focus on the text box so the user can start typing immediately
+
+    // Make it resizable
+    textBox.style.resize = "both";
+    textBox.style.overflow = "auto";
+  }
+</script>
+
+</body>
+</html>
