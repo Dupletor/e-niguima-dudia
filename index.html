@@ -158,8 +158,18 @@
       return params.get(name) || fallback;
     }
 
+let desistoCount = 4;
+
 function desistir() {
-  reveal(answerBox);
+
+  if (desistoCount > 1) {
+    desistoCount--;
+    document.getElementById("desistoBtn").innerText = "Desisto " + desistoCount;
+  } else {
+    reveal(answerBox);
+    document.getElementById("desistoBtn").innerText = "Desistiu";
+    document.getElementById("desistoBtn").disabled = true;
+  }
 }
 
     const key = getQueryParam("q");
@@ -346,7 +356,7 @@ function desistir() {
 
 </script>
 
-<button onclick="desistir()" style="margin-top: 20px; padding: 10px 20px; font-size: 1rem;">
+<button id="desistoBtn" onclick="desistir()" style="margin-top: 20px; padding: 10px 20px; font-size: 1rem;">
   Desisto
 </button>
 
