@@ -158,6 +158,10 @@
       return params.get(name) || fallback;
     }
 
+function desistir() {
+  reveal(answerBox);
+}
+
     const key = getQueryParam("q");
     const basePath = `enigmas/${key}`;
 
@@ -339,7 +343,12 @@
     textBox.style.resize = "both";
     textBox.style.overflow = "auto";
   }
+
 </script>
+
+<button onclick="desistir()" style="margin-top: 20px; padding: 10px 20px; font-size: 1rem;">
+  Desisto
+</button>
 
 </body>
 </html>
