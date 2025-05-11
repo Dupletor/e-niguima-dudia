@@ -301,12 +301,9 @@
   canvas.addEventListener("dblclick", (e) => {
     const currentTime = new Date().getTime();
     
-    if (currentTime - lastClickTime <= doubleClickThreshold) {
-      const { x, y } = getAdjustedCoordinates(e);
-      createTextBox(x, y);  // Adjust for scrolling
-    }
-
-    lastClickTime = currentTime;
+    const { x, y } = getAdjustedCoordinates(e);
+    createTextBox(x, y);  // Adjust for scrolling
+    
   });
 
   // Create a text box at the mouse release position
