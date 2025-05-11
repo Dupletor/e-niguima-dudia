@@ -254,27 +254,37 @@
 <script>
   // Drawing on canvas
   const canvas = document.createElement("canvas");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth * 2;
+  canvas.height = window.innerHeight * 2;
   canvas.style.position = "absolute";
   canvas.style.top = "0";
   canvas.style.left = "0";
-  canvas.style.zIndex = "10";
+  canvas.style.zIndex = "1";  // Make sure it stays behind everything else
   document.body.appendChild(canvas);
 
   const ctx = canvas.getContext("2d");
   let drawing = false;
 
+  // Function to get the mouse coordinates adjusted for scrolling
+  function getAdjustedCoordinates(e) {
+    return {
+      x: e.clientX + window.scrollX,
+      y: e.clientY + window.scrollY
+    };
+  }
+
   // Start drawing when mouse is pressed
   canvas.addEventListener("mousedown", (e) => {
     drawing = true;
-    ctx.moveTo(e.clientX, e.clientY);  // Set the starting point
+    const { x, y } = getAdjustedCoordinates(e);
+    ctx.moveTo(x, y);  // Adjust for scrolling
   });
 
   // Draw as the mouse moves
   canvas.addEventListener("mousemove", (e) => {
     if (!drawing) return;
-    ctx.lineTo(e.clientX, e.clientY);  // Draw a line to the mouse's current position
+    const { x, y } = getAdjustedCoordinates(e);
+    ctx.lineTo(x, y);  // Adjust for scrolling
     ctx.strokeStyle = "white";         // Set the color to white
     ctx.lineWidth = 2;                 // Set the line thickness
     ctx.stroke();                      // Draw the line
@@ -286,8 +296,17 @@
   });
 
   // Double-click functionality to create a new text box
+  let lastClickTime = 0;
+  const doubleClickThreshold = 300;  // 300ms for double-click detection
   canvas.addEventListener("dblclick", (e) => {
-    createTextBox(e.clientX, e.clientY);  // Create a new text box at the click position
+    const currentTime = new Date().getTime();
+    
+    if (currentTime - lastClickTime <= doubleClickThreshold) {
+      const { x, y } = getAdjustedCoordinates(e);
+      createTextBox(x, y);  // Adjust for scrolling
+    }
+
+    lastClickTime = currentTime;
   });
 
   // Create a text box at the mouse release position
