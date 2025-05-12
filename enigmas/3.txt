@@ -1,15 +1,5 @@
+"Realidade Virtual" representa letras extras
+"está rodeada por" descreve posição de letras
+"sem cabeça" representa uma manipulação de escrita
+A resposta é uma palavra chula
 vulgar
-
-A pulga sem cabeça
-está rodeada
-por Realidade Virtual
-
-e-niguima dudia 3
-
-_ _ _ _ _ _
-
-Dica 1: ||"Realidade Virtual" representa letras extras||
-Dica 2: ||"está rodeada por" descreve posição de letras||
-Dica 3: ||"sem cabeça" representa uma manipulação de escrita||
-
-Resposta: ||----vulgar-----||
