@@ -286,9 +286,6 @@ function desistir() {
 
 <script>
 
-  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  if(!isMobile) {
   // Drawing on canvas
   const canvas = document.createElement("canvas");
   canvas.width = window.innerWidth;
@@ -357,11 +354,13 @@ function desistir() {
     textBox.style.resize = "both";
     textBox.style.overflow = "auto";
   }
-  }
 
 </script>
 
-<button id="desistoBtn" onclick="desistir()" style="margin-top: 20px; padding: 10px 20px; font-size: 1rem;">
+<button id="desistoBtn" onclick="desistir()" style="
+  position: absolute;
+  z-index: 10;
+">
   Desisto
 </button>
 
