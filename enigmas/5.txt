@@ -1,7 +1,7 @@
 "totalmente feminina" brinca com as regras da gramática
-"tentei fazer uma" representa uma tentativa errada de brincar com as regras
+"tentei fazer uma" é uma tentativa errada de brincar com as regras
 "i" substitui o conector "e" da frase
 "um erro no código" representa um pedaço da resposta
-"a primeira coisa que saiu" representa a posição dos pedaços mencionados
+"a primeira coisa que saiu" diz a posição dos pedaços mencionados
 Que raios de tralha é esse enigma?
 bugiganga
