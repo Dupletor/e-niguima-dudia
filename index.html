@@ -285,6 +285,10 @@ function desistir() {
   </script>
 
 <script>
+
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if(!isMobile) {
   // Drawing on canvas
   const canvas = document.createElement("canvas");
   canvas.width = window.innerWidth;
@@ -352,6 +356,7 @@ function desistir() {
     // Make it resizable
     textBox.style.resize = "both";
     textBox.style.overflow = "auto";
+  }
   }
 
 </script>
