@@ -1,12 +1,12 @@
 window_set_size(800, 800);
 
-number.text = "4";
+number.text = "5";
 enigma.riddle = [
-"Carlinha e Camila",
-"eram irmãs gêmeas muito unidas",
-"até a sua ficou com ciúme",
-"e a elas se juntou"
+"Tentei fazer uma gangue",
+"totalmente feminina",
+"i a primeira coisa que saiu",
+"foi um erro no código."
 ];
-var ans = "cacatua"
+var ans = "bugiganga"
 
 answer.length = string_length(ans);
