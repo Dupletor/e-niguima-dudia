@@ -368,5 +368,57 @@ function desistir() {
   Desisto
 </button>
 
+<div id="levelSelector" style="position: absolute; top: 10px; left: 10px; z-index: 999;">
+  <button onclick="toggleDropdown()" style="font-size: 20px; padding: 10px 20px;">E-níguimas antigos</button>
+  <div id="dropdown" style="display: none; background-color: #111; border: 1px solid #444; padding: 10px; margin-top: 10px;"></div>
+</div>
+
+<script>
+  function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown');
+    if (dropdown.style.display === 'none') {
+      fetchAvailableLevels();
+      dropdown.style.display = 'block';
+    } else {
+      dropdown.style.display = 'none';
+    }
+  }
+
+  function fetchAvailableLevels() {
+    fetch('enigmas/')
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = Array.from(doc.querySelectorAll('a'))
+          .map(link => link.getAttribute('href'))
+          .filter(href => href && href.match(/^\d+\.png$/)) // Only numbered PNGs
+          .map(href => parseInt(href)) // Get the number part
+          .filter(n => !isNaN(n))
+          .sort((a, b) => a - b); // Sort levels
+
+        const dropdown = document.getElementById('dropdown');
+        dropdown.innerHTML = ''; // Clear existing buttons
+
+        links.filter(level => level !== "6")
+	.forEach(level => {
+
+          const btn = document.createElement('button');
+          btn.textContent = `Enigma ${level}`;
+          btn.style.display = 'block';
+          btn.style.margin = '2px';
+          btn.onclick = () => {
+            window.location.href = `?q=${level}`;
+          };
+          dropdown.appendChild(btn);
+        });
+      })
+      .catch(err => {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.innerHTML = '<div style="color: red;">Erro ao carregar níveis.</div>';
+      });
+  }
+</script>
+
 </body>
 </html>

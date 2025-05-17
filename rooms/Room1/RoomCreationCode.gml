@@ -1,12 +1,12 @@
 window_set_size(800, 800);
 
-number.text = "5";
+number.text = "7";
 enigma.riddle = [
-"Tentei fazer uma gangue",
-"totalmente feminina",
-"i a primeira coisa que saiu",
-"foi um erro no código."
+"Eu vou, eu vou",
+"Pro próximo level, eu vou",
+"Pararatimbum pararatimbum, eu vou!",
+"Mas qual personagem será a resposta?"
 ];
-var ans = "bugiganga"
+var ans = "Robson"
 
 answer.length = string_length(ans);
