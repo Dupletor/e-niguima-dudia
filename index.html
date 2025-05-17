@@ -400,7 +400,8 @@ function desistir() {
         const dropdown = document.getElementById('dropdown');
         dropdown.innerHTML = ''; // Clear existing buttons
 
-        links.filter(level => level !== "6")
+        links.filter(level => level != 6)
+
 	.forEach(level => {
 
           const btn = document.createElement('button');
