@@ -127,6 +127,31 @@
   let answerText = "";
   let answerBox;
 
+function shouldDisableBoxes(level) {
+  return fetch('not-levels.json')
+    .then(response => {
+      if (!response.ok) throw new Error("Could not load not-levels.json");
+      return response.json();
+    })
+    .then(notLevels => {
+      return notLevels.includes(Number(level));
+    })
+    .catch(error => {
+      console.error("Error loading not-levels.json:", error);
+      return false;
+    });
+}
+
+  function disableHintAndAnswerBoxes() {
+    const hintBox = document.getElementById('hints');
+    const answerBox = document.getElementById('answer');
+    hintBox.style.pointerEvents = 'none';
+    hintBox.style.opacity = 0;
+    answerBox.onclick = null;
+    answerBox.style.pointerEvents = 'none';
+    answerBox.style.opacity = 0;
+  }
+
   function checkAnswer(element) {
       const correctAnswer = answerText;  
       const userInput = prompt("Digite sua resposta:");
@@ -174,6 +199,11 @@ function desistir() {
 
     const key = getQueryParam("level");
     const basePath = `enigmas/${key}`;
+    shouldDisableBoxes(key).then(shouldDisable => {
+      if(shouldDisable) {
+        disableHintAndAnswerBoxes();
+      }
+    });
 
     const mediaContainer = document.getElementById("media");
 
