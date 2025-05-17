@@ -385,20 +385,11 @@ function desistir() {
   }
 
   function fetchAvailableLevels() {
-    fetch('enigmas/')
-      .then(response => response.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const links = Array.from(doc.querySelectorAll('a'))
-          .map(link => link.getAttribute('href'))
-          .filter(href => href && href.match(/^\d+\.png$/)) // Only numbered PNGs
-          .map(href => parseInt(href)) // Get the number part
-          .filter(n => !isNaN(n))
-          .sort((a, b) => a - b); // Sort levels
-
+    fetch('levels.json')
+      .then(response => response.json())
+      .then(links => {
         const dropdown = document.getElementById('dropdown');
-        dropdown.innerHTML = ''; // Clear existing buttons
+        dropdown.innerHTML = '';
 
         links.filter(level => level != 6)
 
