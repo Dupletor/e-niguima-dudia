@@ -43,6 +43,7 @@ class Shimeji {
     this.x = 50;
     this.y = 50;
     this.vx = 1 + Math.random() * 1;
+    this.vx_bk = this.vx;
     this.vy = 0;
     this.gravity = 0.5;
     this.groundY = window.innerHeight - 64;
@@ -73,8 +74,7 @@ class Shimeji {
 
     document.addEventListener('mouseup', () => {
       this.isDragging = false;
-      this.vx = 1 + Math.random() * 1;
-      this.vy = 0;
+      this.vx = this.vx_bk;
       this.gravity = 0.5;
     });
 
@@ -88,8 +88,8 @@ update() {
     this.x += this.vx;
 
     // Bounce on floor
-    if (this.y > this.groundY) {
-      this.y = this.groundY;
+    if (this.y > this.groundY - 10) {
+      this.y = this.groundY - 10;
       this.vy *= -0.6;
     }
 
@@ -97,11 +97,13 @@ update() {
     if (this.x <= 0) {
       this.x = 0;
       this.vx *= -1;
+      this.vx_bk = this.vx;
     }
 
     if (this.x >= window.innerWidth - 64) {
       this.x = window.innerWidth - 64;
       this.vx *= -1;
+      this.vx_bk = this.vx;
     }
 
     this.flipImage(this.vx > 0);
@@ -109,6 +111,7 @@ update() {
     // While dragging, no physics, no flip change
     // But keep position updated by mousemove handler
   }
+
 
   // Always update element position from current x, y
   this.el.style.left = this.x + 'px';

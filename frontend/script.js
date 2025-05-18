@@ -79,7 +79,7 @@ function desistir() {
       }
     });
 
-    if(Number(key) > 7)
+    if(key =='today' || Number(key) > 7)
         spawnRobson();
 
     const mediaContainer = document.getElementById("media");

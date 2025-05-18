@@ -2,7 +2,7 @@
   // Drawing on canvas
   const canvas = document.createElement("canvas");
   canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight * 1.2;
+  canvas.height = window.innerHeight * 1.7;
   canvas.style.position = "absolute";
   canvas.style.top = "0";
   canvas.style.left = "0";
