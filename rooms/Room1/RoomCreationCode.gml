@@ -1,12 +1,11 @@
 window_set_size(800, 800);
 
-number.text = "7";
+number.text = "8";
 enigma.riddle = [
-"Eu vou, eu vou",
-"Pro próximo level, eu vou!",
-"Pararatimbum pararatimbum, eu vou!",
-"Mas qual personagem será a resposta?"
+"Sob domínio da França",
+"exigi a remoção da minha ex",
+"de raiva, de fúria, de... ira."
 ];
-var ans = "Robson"
+var ans = "frigideira"
 
 answer.length = string_length(ans);
