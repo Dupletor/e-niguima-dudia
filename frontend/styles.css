@@ -1,0 +1,110 @@
+body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .media-container {
+      max-width: 90%;
+      margin: 0 auto 2rem auto;
+    }
+
+    video, img {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #444;
+    }
+
+    .hint-container {
+      margin-bottom: 2rem;
+    }
+
+    .hint{
+      background-color: #222;
+      color: #222;
+      border: 1px solid #444;
+      margin: 0.5rem auto;
+      padding: 1rem;
+      width: 600px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center; /* Align text and box */
+      justify-content: flex-start; /* Align text to the left */
+    }
+    .answer {
+      background-color: #222;
+      color: #222;
+      border: 1px solid #444;
+      margin: 0.5rem auto;
+      padding: 1rem;
+      width: 300px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center; /* Align text and box */
+      justify-content: flex-start; /* Align text to the left */
+    }
+
+    .hint span, .answer span {
+      margin-right: 10px; /* Space between the text and box */
+    }
+
+    .revealed {
+      color: #fff;
+    }
+
+    .not-found {
+      color: red;
+      font-size: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    /* Additional styling for the label text */
+    .hint-label {
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .hint-box, .answer-box {
+      background-color: #444;
+      width: 600px;
+      height: 30px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      color: #222;
+      transition: background-color 0.3s ease;
+    }
+
+    .hint-box.revealed, .answer-box.revealed {
+      background-color: #666;
+      color: #fff;
+    }
+
+.hint, .hint-box, .answer, .answer-box {
+	z-index: 30;
+}
+
+.text-box {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 18px;
+  border: 1px solid #444;
+  padding: 10px;
+  max-width: 300px;
+  min-width: 100px;
+  max-height: 150px;
+  min-height: 50px;  /* Ensuring the minimum height */
+  resize: both;  /* This allows resizing the box */
+  overflow: auto;  /* Ensures scrolling if content overflows */
+  z-index: 20;  /* Ensure it's above the canvas */
+}
