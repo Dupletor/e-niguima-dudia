@@ -81,12 +81,12 @@ function desistir() {
     if(key =='today' || Number(key) > 7)
         spawnRobson();
 
-    if ((key == 'today') /*remove tomorrow*/ || (Number(key)  === 9)) {
+    if (/*(key == 'today') add tomorrow ||*/ (Number(key)  === 10)) {
       const desistoBtn = document.getElementById("desistoBtn");
       if (desistoBtn) {
         desistoBtn.style.display = "none";
       }
-      // Dynamically load the special script for level 9
+      // Dynamically load the special script for level 10
       const script = document.createElement('script');
       script.src = 'frontend/imageSearch.js'; // change to your actual script path
       script.onload = () => {

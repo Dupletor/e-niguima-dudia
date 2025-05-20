@@ -1,11 +1,12 @@
 window_set_size(800, 800);
 
-number.text = "8";
+number.text = "9";
 enigma.riddle = [
-"Sob domínio da França",
-"exigi a remoção da minha ex",
-"de raiva, de fúria, de... ira."
+"Vai rindo, vai rindo, ele",
+"Dentro tem um BOSS",
+"Prepare-se, com sabão em pó",
+"O próximo nível é o seu maior medo."
 ];
-var ans = "frigideira"
+var ans = "ribossomo"
 
 answer.length = string_length(ans);
