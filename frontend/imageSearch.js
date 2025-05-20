@@ -118,10 +118,11 @@ async function searchImages() {
       img.style.maxWidth = '100%';
       mediaDiv.appendChild(img);
 
+      document.querySelector("#answer .answer-box")?.setAttribute("data-hint", query);
+
       reveal(answerBox);
       new Audio('certa resposta.mp3').play();
       alert("Acertô mizeravi!");
-      document.getElementById("answer").setAttribute('data-hint', query);
 
     } else {
       mediaDiv.innerHTML = 'No images found.';
