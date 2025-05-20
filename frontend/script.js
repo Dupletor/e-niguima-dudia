@@ -36,7 +36,6 @@ function shouldDisableBoxes(level) {
         correctAudio.play();  // Play correct answer sound
         alert("Acertô mizeravi!");  // Display correct message
       } else {
-        element.classList.add('revealed');
         const errorAudio = new Audio('errooo.mp3');
         errorAudio.play();  // Play error sound
         alert("Errooooooooo");  // Display incorrect message
@@ -81,6 +80,26 @@ function desistir() {
 
     if(key =='today' || Number(key) > 7)
         spawnRobson();
+
+    if ((key == 'today') /*remove tomorrow*/ || (Number(key)  === 9)) {
+      const desistoBtn = document.getElementById("desistoBtn");
+      if (desistoBtn) {
+        desistoBtn.style.display = "none";
+      }
+      // Dynamically load the special script for level 9
+      const script = document.createElement('script');
+      script.src = 'frontend/imageSearch.js'; // change to your actual script path
+      script.onload = () => {
+        // You can call an init function here if needed
+        const answer = document.getElementById("answer");
+        if (answer) {
+          answer.onclick = searchImages;
+        }
+        injectNuNumber();
+      };
+      document.body.appendChild(script);
+
+    }
 
     const mediaContainer = document.getElementById("media");
 

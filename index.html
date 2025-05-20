@@ -11,20 +11,22 @@
   <div class="hint-container" id="hints"></div>
   <div class="answer" id="answer" onclick="checkAnswer(this)"></div>
 
+
+  <button id="desistoBtn" onclick="desistir()" style="
+    position: relative;
+    z-index: 10;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+  ">
+    Desisto
+  </button>
+
   <script src="frontend/mascot.js"></script>
   <script src="frontend/script.js"></script>
   <script src="frontend/canvas.js"></script>
   <script src="frontend/oldLevels.js"></script>
 
-<button id="desistoBtn" onclick="desistir()" style="
-  position: relative;
-  z-index: 10;
-  padding: 10px 20px;
-  margin-top: 20px;
-  font-size: 1rem;
-">
-  Desisto
-</button>
 
 <div id="levelSelector" style="position: absolute; top: 10px; left: 10px; z-index: 999;">
   <button onclick="toggleDropdown()" style="font-size: 20px; padding: 10px 20px;">E-níguimas antigos</button>

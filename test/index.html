@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pixabay Image Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #results img {
+      width: 300px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pixabay Image Search</h1>
+  <input id="query" placeholder="Search for images (e.g., sunset)">
+  <button onclick="searchImages()">Search</button>
+
+  <div id="results"></div>
+
+  <script>
+    async function searchImages() {
+      const query = document.getElementById('query').value.trim();
+      if (!query) return;
+
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = 'Loading...';
+
+      const apiKey = '50388721-8e951e087ae631966a49605c1';
+      const url = `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        resultsDiv.innerHTML = ''; // Clear previous results
+
+        if (data.hits && data.hits.length > 0) {
+          // Filter and show only the first image from the response
+          const firstImage = data.hits[0]; // Get the first image
+          const img = document.createElement('img');
+          img.src = firstImage.webformatURL;
+          img.alt = firstImage.tags;
+
+          resultsDiv.appendChild(img);
+        } else {
+          resultsDiv.innerHTML = 'No images found.';
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        resultsDiv.innerHTML = 'Failed to load images.';
+      }
+    }
+  </script>
+</body>
+</html>

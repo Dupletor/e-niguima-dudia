@@ -18,7 +18,6 @@ function fetchAvailableLevels() {
         links.filter(level => level != 6)
 
     .forEach(level => {
-
           const btn = document.createElement('button');
           btn.textContent = `Enigma ${level}`;
           btn.style.display = 'block';
