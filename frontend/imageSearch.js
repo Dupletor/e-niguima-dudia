@@ -23,6 +23,10 @@ function generateNumberCode() {
     return `${segment()}-${segment()}-${segment()}-${segment()}`;
   }
 
+function removeAccents(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 function injectNuNumber() {
   let nuNumber = getCookie('nuNumber');
   if (!nuNumber) {
@@ -71,8 +75,10 @@ async function searchImages() {
   if (savedQuery && savedImage) {
     document.querySelector("#answer .answer-box")?.setAttribute("data-hint", savedQuery);
 
-    const inputQuery = prompt("Digite sua resposta:");
+    let inputQuery = prompt("Digite sua resposta:");
     if (!inputQuery) return;
+
+    inputQuery = removeAccents(inputQuery);
 
     if (inputQuery === savedQuery) {
       reveal(answerBox);
