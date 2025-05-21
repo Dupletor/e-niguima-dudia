@@ -81,7 +81,7 @@ function desistir() {
     if(key =='today' || Number(key) > 7)
         spawnRobson();
 
-    if (/*(key == 'today') add tomorrow ||*/ (Number(key)  === 10)) {
+    if ((key == 'today') || /*remove tomorrow*/ (Number(key)  === 10)) {
       const desistoBtn = document.getElementById("desistoBtn");
       if (desistoBtn) {
         desistoBtn.style.display = "none";
