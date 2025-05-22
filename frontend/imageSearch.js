@@ -97,6 +97,7 @@ async function searchImages() {
     }
     return;
   }
+  let originalMediaContent = mediaDiv.innerHTML;
 
   mediaDiv.innerHTML = 'Loading...';
 
@@ -131,9 +132,11 @@ async function searchImages() {
       alert("Acertô mizeravi!");
 
     } else {
-        prompt("Não consegui interpretar o que o texto significa. Tente outra coisa, algo mais comum.");
+        mediaDiv.innerHTML = originalMediaContent;
+        alert("Não consegui interpretar o que o texto significa. Tente outra coisa, algo mais comum.");
     }
   } catch (err) {
-    prompt("Chat está dando DDoS. Espere 1 minuto e tente algo diferente.");
+    mediaDiv.innerHTML = originalMediaContent;
+    alert("Chat está dando DDoS. Espere 1 minuto e tente algo diferente.");
   }
 }
