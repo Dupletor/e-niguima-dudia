@@ -131,10 +131,9 @@ async function searchImages() {
       alert("Acertô mizeravi!");
 
     } else {
-      mediaDiv.innerHTML = 'No images found.';
+        prompt("Não consegui interpretar o que o texto significa. Tente outra coisa, algo mais comum.");
     }
   } catch (err) {
-    console.error('Fetch error:', err);
-    mediaDiv.innerHTML = 'Failed to load images.';
+    prompt("Chat está dando DDoS. Espere 1 minuto e tente algo diferente.");
   }
 }
